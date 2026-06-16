@@ -1213,6 +1213,171 @@
   color: white;
 }
 
+.admin-settings-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-settings-panel {
+  overflow: hidden;
+}
+
+.admin-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+.admin-settings-grid.two-column {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(320px, 1.2fr);
+}
+
+.admin-color-field,
+.admin-setting-block,
+.admin-range-field {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-color-field > span,
+.admin-setting-block > span,
+.admin-range-field > span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-color-field > div,
+.admin-range-field > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.admin-color-field input[type="color"] {
+  width: 42px;
+  height: 34px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 0;
+  border-radius: 9px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.admin-color-field input[type="text"],
+.admin-color-field input:not([type]) {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  color: white;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-mode-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-mode-options label {
+  display: flex;
+  min-height: 84px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  color: rgba(255, 255, 255, 0.56);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.admin-mode-options label.active {
+  border-color: rgba(155, 99, 255, 0.55);
+  color: white;
+  background: rgba(124, 58, 237, 0.13);
+}
+
+.admin-mode-options input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.admin-logo-uploader {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.9fr) minmax(180px, 1fr);
+  gap: 14px;
+}
+
+.admin-logo-preview {
+  display: grid;
+  min-height: 118px;
+  place-items: center;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.42);
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.07), transparent),
+    rgba(255, 255, 255, 0.018);
+  text-align: center;
+}
+
+.admin-logo-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 86px;
+  object-fit: contain;
+}
+
+.admin-logo-preview small {
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+.admin-logo-actions {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-logo-actions input[type="file"] {
+  display: none;
+}
+
+.admin-range-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--admin-violet);
+}
+
+.admin-range-field input[type="number"] {
+  width: 78px;
+  height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid var(--admin-border);
+  border-radius: 9px;
+  color: white;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 12px;
+  text-align: center;
+}
+
 .admin-toast-stack {
   position: fixed;
   z-index: 150;
@@ -1269,8 +1434,13 @@
   }
 
   .admin-project-grid,
-  .admin-testimonial-grid {
+  .admin-testimonial-grid,
+  .admin-settings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-settings-grid.two-column {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1376,7 +1546,9 @@
 
   .admin-stat-grid,
   .admin-project-grid,
-  .admin-testimonial-grid {
+  .admin-testimonial-grid,
+  .admin-settings-grid,
+  .admin-settings-grid.two-column {
     grid-template-columns: 1fr;
   }
 
@@ -1425,6 +1597,10 @@
   .admin-form-actions {
     align-items: stretch;
     flex-direction: column-reverse;
+  }
+
+  .admin-logo-uploader {
+    grid-template-columns: 1fr;
   }
 
   .admin-modal-layer {

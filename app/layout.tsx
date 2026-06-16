@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import {
+  buildThemeCssVariables,
+  getWebsiteSettings,
+} from "@/lib/theme-settings";
 import "./globals.css";
 
 const inter = Inter({
@@ -69,15 +74,26 @@ export const viewport: Viewport = {
   themeColor: "#05050a",
 };
 
-export default function RootLayout({
+export const dynamic = "force-dynamic";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getWebsiteSettings();
+  const modeScript = `(() => { try { const stored = localStorage.getItem("hike-theme-mode"); const mode = stored === "light" || stored === "dark" ? stored : "${settings.defaultMode}"; document.documentElement.dataset.theme = mode; } catch (_) { document.documentElement.dataset.theme = "${settings.defaultMode}"; } })();`;
+
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      data-theme={settings.defaultMode}
+      style={buildThemeCssVariables(settings)}
+      suppressHydrationWarning
+    >
       <body className={`${inter.variable} ${manrope.variable}`}>
-        {children}
+        <script dangerouslySetInnerHTML={{ __html: modeScript }} />
+        <ThemeProvider initialSettings={settings}>{children}</ThemeProvider>
       </body>
     </html>
   );

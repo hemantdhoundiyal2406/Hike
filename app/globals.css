@@ -1,13 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05050a;
-  --surface: #0b0a13;
-  --surface-2: #100d1b;
-  --line: rgba(255, 255, 255, 0.1);
-  --muted: rgba(255, 255, 255, 0.56);
-  --violet: #8b5cf6;
-  --violet-bright: #a855f7;
+  --primary-color: #8b5cf6;
+  --secondary-color: #a855f7;
+  --bg-color: #05050a;
+  --text-color: #f7f5fb;
+  --button-color: #8b5cf6;
+  --card-color: #090811;
+  --border-color: #3b3154;
+  --footer-color: #08070d;
+  --sidebar-color: #05050a;
+  --h1-size: 51px;
+  --h2-size: 45px;
+  --h3-size: 18px;
+  --h4-size: 16px;
+  --p-size: 15px;
+  --menu-size: 14px;
+  --button-text-size: 14px;
+  --footer-text-size: 14px;
+  --theme-line-height: 1.6;
+  --background: var(--bg-color);
+  --surface: var(--card-color);
+  --surface-2: color-mix(in srgb, var(--card-color), white 4%);
+  --line: color-mix(in srgb, var(--border-color), transparent 58%);
+  --muted: color-mix(in srgb, var(--text-color), transparent 44%);
+  --violet: var(--primary-color);
+  --violet-bright: var(--secondary-color);
+  --page-bg-color: var(--background);
+  --page-text-color: var(--text-color);
+  --page-card-color: var(--surface);
+  --page-footer-color: var(--footer-color);
+  --page-sidebar-color: var(--sidebar-color);
+  --page-border-color: var(--line);
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 * {
@@ -16,21 +45,25 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--background);
+  background: var(--page-bg-color);
 }
 
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 75% 10%, rgba(92, 38, 160, 0.08), transparent 28%),
-    #05050a;
-  color: #f7f5fb;
+    radial-gradient(
+      circle at 75% 10%,
+      color-mix(in srgb, var(--primary-color), transparent 90%),
+      transparent 28%
+    ),
+    var(--page-bg-color);
+  color: var(--page-text-color);
   font-family: var(--font-inter), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.55);
+  background: color-mix(in srgb, var(--primary-color), transparent 45%);
   color: white;
 }
 
@@ -47,8 +80,20 @@ a {
   outline-offset: 4px;
 }
 
+.site-layout {
+  min-height: 100svh;
+  background: var(--page-bg-color);
+}
+
+.site-content {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
 .site-main {
   position: relative;
+  flex: 1;
   overflow: clip;
 }
 
@@ -59,7 +104,7 @@ a {
   min-height: auto;
   padding: 48px 6vw 40px;
   scroll-margin-top: 60px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid color-mix(in srgb, var(--page-border-color), transparent 48%);
 }
 
 .section-shell:not(.hero-grid) {
@@ -84,7 +129,7 @@ a {
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 0.8rem;
-  color: #a855f7;
+  color: var(--secondary-color);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -96,8 +141,8 @@ a {
   width: 0.52rem;
   height: 0.52rem;
   border-radius: 999px;
-  background: #8b5cf6;
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.7);
+  background: var(--primary-color);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--primary-color), transparent 30%);
 }
 
 .hero-title,
@@ -111,14 +156,19 @@ a {
 }
 
 .hero-title {
-  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-size: var(--h1-size);
 }
 
 .hero-title strong,
 .section-title span {
   display: inline;
   color: transparent;
-  background: linear-gradient(100deg, #7c3aed, #b45cff 70%, #7c3aed);
+  background: linear-gradient(
+    100deg,
+    var(--primary-color),
+    var(--secondary-color) 70%,
+    var(--primary-color)
+  );
   background-clip: text;
   -webkit-background-clip: text;
 }
@@ -129,14 +179,14 @@ a {
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  font-size: var(--h2-size);
 }
 
 .section-description {
   margin-top: 0.8rem;
   color: var(--muted);
-  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
-  line-height: 1.6;
+  font-size: var(--p-size);
+  line-height: var(--theme-line-height);
 }
 
 .primary-button,
@@ -148,7 +198,7 @@ a {
   min-height: 50px;
   border-radius: 10px;
   padding: 0 1.3rem;
-  font-size: 0.875rem;
+  font-size: var(--button-text-size);
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -160,34 +210,38 @@ a {
 }
 
 .primary-button {
-  border: 1px solid rgba(181, 107, 255, 0.7);
-  background: linear-gradient(105deg, #5b21b6, #9f42ed);
+  border: 1px solid color-mix(in srgb, var(--button-color), white 28%);
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--button-color), black 24%),
+    var(--button-color)
+  );
   color: white;
-  box-shadow: 0 12px 38px rgba(109, 40, 217, 0.24);
+  box-shadow: 0 12px 38px color-mix(in srgb, var(--button-color), transparent 76%);
 }
 
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 46px rgba(139, 92, 246, 0.34);
+  box-shadow: 0 16px 46px color-mix(in srgb, var(--button-color), transparent 66%);
 }
 
 .outline-button {
-  border: 1px solid rgba(139, 92, 246, 0.55);
-  background: rgba(139, 92, 246, 0.035);
-  color: #d8b4fe;
+  border: 1px solid color-mix(in srgb, var(--primary-color), transparent 45%);
+  background: color-mix(in srgb, var(--primary-color), transparent 94%);
+  color: color-mix(in srgb, var(--primary-color), white 48%);
 }
 
 .outline-button:hover {
   transform: translateY(-2px);
-  border-color: rgba(192, 132, 252, 0.9);
-  background: rgba(139, 92, 246, 0.1);
+  border-color: color-mix(in srgb, var(--secondary-color), white 16%);
+  background: color-mix(in srgb, var(--primary-color), transparent 88%);
   color: white;
 }
 
 .text-link {
   min-height: auto;
   padding: 0;
-  color: #c084fc;
+  color: color-mix(in srgb, var(--secondary-color), white 24%);
 }
 
 .text-link:hover {
@@ -199,15 +253,138 @@ a {
   width: 31px;
   height: 31px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid color-mix(in srgb, var(--page-text-color), transparent 72%);
   border-radius: 999px;
   transition: 180ms ease;
 }
 
 .social-link:hover {
-  border-color: #a855f7;
+  border-color: var(--secondary-color);
   color: white;
   transform: translateY(-2px);
+}
+
+.logo-mark-frame {
+  border-color: color-mix(in srgb, var(--primary-color), transparent 55%);
+  background: color-mix(in srgb, var(--primary-color), transparent 90%);
+}
+
+.group:hover .logo-mark-frame {
+  border-color: color-mix(in srgb, var(--primary-color), white 22%);
+}
+
+.logo-mark-text,
+.logo-wordmark {
+  color: var(--page-text-color);
+}
+
+.logo-mark-text span {
+  color: var(--primary-color);
+}
+
+.logo-tagline {
+  color: color-mix(in srgb, var(--page-text-color), transparent 55%);
+}
+
+.dynamic-logo-image {
+  display: inline-flex;
+  max-width: 150px;
+  min-height: 44px;
+  align-items: center;
+}
+
+.dynamic-logo-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 48px;
+}
+
+.site-sidebar {
+  border-color: var(--page-border-color);
+  background: color-mix(in srgb, var(--page-sidebar-color), transparent 8%);
+}
+
+.site-sidebar-link {
+  color: color-mix(in srgb, var(--page-text-color), transparent 42%);
+  font-size: var(--menu-size);
+}
+
+.site-sidebar-link:hover,
+.site-sidebar-link.active {
+  color: var(--page-text-color);
+}
+
+.site-sidebar-link.active {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--primary-color), transparent 65%),
+    transparent
+  );
+}
+
+.site-sidebar-active-bar {
+  background: var(--primary-color);
+  box-shadow: 0 0 18px var(--primary-color);
+}
+
+.site-sidebar-link.active svg {
+  color: color-mix(in srgb, var(--primary-color), white 32%);
+}
+
+.mobile-nav-header {
+  border-color: var(--page-border-color);
+  background: color-mix(in srgb, var(--page-sidebar-color), transparent 12%);
+}
+
+.mobile-nav-menu-button,
+.theme-mode-toggle {
+  border-color: var(--page-border-color);
+  color: var(--page-text-color);
+  background: color-mix(in srgb, var(--page-card-color), transparent 18%);
+}
+
+.mobile-nav-link {
+  color: color-mix(in srgb, var(--page-text-color), transparent 30%);
+  font-size: var(--menu-size);
+}
+
+.mobile-nav-link:hover {
+  color: var(--page-text-color);
+  background: color-mix(in srgb, var(--primary-color), transparent 92%);
+}
+
+.theme-mode-toggle {
+  display: inline-flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  margin-bottom: 0.65rem;
+  font-size: var(--menu-size);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.theme-mode-toggle:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary-color), transparent 40%);
+  background: color-mix(in srgb, var(--primary-color), transparent 90%);
+}
+
+.theme-mode-toggle.compact {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  margin-bottom: 0;
+  padding: 0;
 }
 
 .section-glow {
@@ -215,7 +392,7 @@ a {
   width: 40vw;
   height: 60vh;
   border-radius: 999px;
-  background: rgba(109, 40, 217, 0.12);
+  background: color-mix(in srgb, var(--primary-color), transparent 88%);
   filter: blur(130px);
   pointer-events: none;
 }
@@ -241,7 +418,7 @@ a {
     repeating-radial-gradient(
       ellipse at 70% 45%,
       transparent 0 24px,
-      rgba(124, 58, 237, 0.5) 25px,
+      color-mix(in srgb, var(--primary-color), transparent 50%) 25px,
       transparent 26px 40px
     );
   mask-image: linear-gradient(to left, black, transparent);
@@ -255,15 +432,15 @@ a {
   width: 65%;
   height: 58%;
   border-radius: 0 0 0 100%;
-  border-bottom: 1px solid rgba(168, 85, 247, 0.4);
+  border-bottom: 1px solid color-mix(in srgb, var(--secondary-color), transparent 60%);
   background:
     repeating-radial-gradient(
       ellipse at 100% 0,
       transparent 0 12px,
-      rgba(124, 58, 237, 0.15) 13px,
+      color-mix(in srgb, var(--primary-color), transparent 85%) 13px,
       transparent 14px 19px
     );
-  box-shadow: 0 35px 100px rgba(109, 40, 217, 0.1);
+  box-shadow: 0 35px 100px color-mix(in srgb, var(--primary-color), transparent 90%);
   pointer-events: none;
 }
 
@@ -271,11 +448,15 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   overflow: hidden;
-  border: 1px solid rgba(139, 92, 246, 0.24);
+  border: 1px solid color-mix(in srgb, var(--primary-color), transparent 76%);
   border-radius: 14px;
   background:
-    linear-gradient(110deg, rgba(139, 92, 246, 0.06), transparent 38%),
-    rgba(9, 8, 16, 0.76);
+    linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--primary-color), transparent 94%),
+      transparent 38%
+    ),
+    color-mix(in srgb, var(--page-card-color), transparent 24%);
   backdrop-filter: blur(16px);
 }
 
@@ -285,11 +466,11 @@ a {
   gap: 1rem;
   min-height: 106px;
   padding: 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid color-mix(in srgb, var(--page-border-color), transparent 30%);
 }
 
 .stat-item:nth-child(odd) {
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  border-right: 1px solid color-mix(in srgb, var(--page-border-color), transparent 30%);
 }
 
 .stat-item:nth-child(n + 3) {
@@ -303,9 +484,9 @@ a {
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgba(139, 92, 246, 0.22);
-  color: #a855f7;
-  background: rgba(91, 33, 182, 0.13);
+  border: 1px solid color-mix(in srgb, var(--primary-color), transparent 78%);
+  color: var(--secondary-color);
+  background: color-mix(in srgb, var(--primary-color), transparent 87%);
 }
 
 .stat-icon {
@@ -316,7 +497,7 @@ a {
 
 .stat-item strong {
   display: block;
-  color: #9c4dff;
+  color: var(--primary-color);
   font-family: var(--font-manrope), sans-serif;
   font-size: clamp(1.75rem, 2.4vw, 2.55rem);
   line-height: 1;
@@ -325,7 +506,7 @@ a {
 .stat-item small {
   display: block;
   margin-top: 0.55rem;
-  color: rgba(255, 255, 255, 0.53);
+  color: color-mix(in srgb, var(--page-text-color), transparent 47%);
   font-size: 0.76rem;
 }
 
@@ -335,10 +516,10 @@ a {
 .testimonial-card,
 .booking-card,
 .contact-card {
-  border: 1px solid rgba(144, 116, 193, 0.23);
+  border: 1px solid var(--page-border-color);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.025), transparent 54%),
-    rgba(9, 8, 17, 0.74);
+    color-mix(in srgb, var(--page-card-color), transparent 26%);
   backdrop-filter: blur(12px);
 }
 
@@ -364,15 +545,15 @@ a {
   height: 85%;
   content: "";
   border-radius: 50%;
-  background: rgba(124, 58, 237, 0.08);
+  background: color-mix(in srgb, var(--primary-color), transparent 92%);
   filter: blur(25px);
 }
 
 .service-card:hover {
   z-index: 2;
   transform: translateY(-7px);
-  border-color: rgba(168, 85, 247, 0.56);
-  background-color: rgba(13, 10, 25, 0.9);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 44%);
+  background-color: color-mix(in srgb, var(--page-card-color), transparent 10%);
 }
 
 .icon-orb {
@@ -385,7 +566,7 @@ a {
 .process-card h3 {
   margin-top: 1.45rem;
   font-family: var(--font-manrope), sans-serif;
-  font-size: 1.08rem;
+  font-size: var(--h3-size);
   font-weight: 650;
 }
 
@@ -394,9 +575,9 @@ a {
   position: relative;
   z-index: 1;
   margin-top: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  line-height: 1.75;
+  color: color-mix(in srgb, var(--page-text-color), transparent 50%);
+  font-size: var(--p-size);
+  line-height: var(--theme-line-height);
 }
 
 .project-card {
@@ -409,16 +590,16 @@ a {
 
 .project-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(168, 85, 247, 0.56);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 44%);
 }
 
 .project-summary {
   display: -webkit-box;
   overflow: hidden;
   margin-top: 0.85rem;
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.74rem;
-  line-height: 1.65;
+  color: color-mix(in srgb, var(--page-text-color), transparent 62%);
+  font-size: var(--p-size);
+  line-height: var(--theme-line-height);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -428,11 +609,11 @@ a {
   min-height: 240px;
   place-items: center;
   margin-top: 2rem;
-  border: 1px dashed rgba(139, 92, 246, 0.25);
+  border: 1px dashed color-mix(in srgb, var(--primary-color), transparent 75%);
   border-radius: 15px;
-  color: rgba(255, 255, 255, 0.42);
-  background: rgba(139, 92, 246, 0.025);
-  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 58%);
+  background: color-mix(in srgb, var(--primary-color), transparent 97%);
+  font-size: var(--p-size);
   text-align: center;
 }
 
@@ -458,7 +639,11 @@ a {
   height: 38px;
   place-items: center;
   border-radius: 999px;
-  background: linear-gradient(135deg, #4c1d95, #7c3aed);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary-color), black 38%),
+    var(--primary-color)
+  );
   font-size: 0.76rem;
   font-weight: 700;
 }
@@ -479,11 +664,11 @@ a {
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 3px solid #05050a;
+  border: 3px solid var(--page-bg-color);
   border-radius: 999px;
   color: white;
-  background: #7c3aed;
-  box-shadow: 0 0 24px rgba(124, 58, 237, 0.42);
+  background: var(--primary-color);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--primary-color), transparent 58%);
   transform: translateY(-50%);
 }
 
@@ -492,7 +677,7 @@ a {
   z-index: 0;
   top: 2rem;
   right: 9%;
-  color: rgba(109, 40, 217, 0.2);
+  color: color-mix(in srgb, var(--primary-color), transparent 80%);
   font-family: Georgia, serif;
   font-size: clamp(12rem, 28vw, 31rem);
   line-height: 1;
@@ -510,7 +695,7 @@ a {
     repeating-radial-gradient(
       ellipse at 62% 50%,
       transparent 0 7px,
-      rgba(139, 92, 246, 0.35) 8px,
+      color-mix(in srgb, var(--primary-color), transparent 65%) 8px,
       transparent 9px 14px
     );
   mask-image: radial-gradient(ellipse, black, transparent 68%);
@@ -527,9 +712,9 @@ a {
 
 .testimonial-card blockquote {
   margin: 2rem 0 2.4rem;
-  color: rgba(255, 255, 255, 0.77);
-  font-size: 0.96rem;
-  line-height: 1.85;
+  color: color-mix(in srgb, var(--page-text-color), transparent 23%);
+  font-size: var(--p-size);
+  line-height: var(--theme-line-height);
 }
 
 .testimonial-card footer {
@@ -547,10 +732,14 @@ a {
   height: 50px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgba(192, 132, 252, 0.35);
+  border: 1px solid color-mix(in srgb, var(--secondary-color), transparent 65%);
   border-radius: 999px;
-  color: #e9d5ff;
-  background: linear-gradient(135deg, #2e1065, #7c3aed);
+  color: color-mix(in srgb, var(--secondary-color), white 70%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary-color), black 62%),
+    var(--primary-color)
+  );
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -573,7 +762,11 @@ a {
   inset: 16%;
   border-radius: 999px;
   background:
-    radial-gradient(circle, rgba(139, 92, 246, 0.24), transparent 68%);
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--primary-color), transparent 76%),
+      transparent 68%
+    );
   filter: blur(46px);
   pointer-events: none;
 }
@@ -618,13 +811,13 @@ a {
 }
 
 .testimonial-card footer strong {
-  font-size: 0.88rem;
+  font-size: var(--p-size);
 }
 
 .testimonial-card footer small {
   margin-top: 0.35rem;
-  color: rgba(255, 255, 255, 0.43);
-  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 57%);
+  font-size: var(--footer-text-size);
 }
 
 .booking-section {
@@ -639,8 +832,8 @@ a {
   height: 39%;
   opacity: 0.3;
   background-image:
-    linear-gradient(rgba(124, 58, 237, 0.19) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 58, 237, 0.19) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--primary-color), transparent 81%) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary-color), transparent 81%) 1px, transparent 1px);
   background-size: 30px 30px;
   mask-image: radial-gradient(ellipse at 70% 30%, black, transparent 68%);
   transform: perspective(800px) rotateX(65deg) translateY(-22%);
@@ -660,14 +853,14 @@ a {
   gap: 0.75rem;
   margin-bottom: 2rem;
   padding-bottom: 1.45rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--page-border-color), transparent 25%);
 }
 
 .booking-progress-item {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  color: rgba(255, 255, 255, 0.33);
+  color: color-mix(in srgb, var(--page-text-color), transparent 67%);
 }
 
 .booking-progress-item > span {
@@ -675,15 +868,15 @@ a {
   width: 29px;
   height: 29px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid color-mix(in srgb, var(--page-border-color), transparent 20%);
   border-radius: 999px;
   font-size: 0.7rem;
 }
 
 .booking-progress-item > span.active {
-  border-color: rgba(168, 85, 247, 0.7);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 30%);
   color: white;
-  background: #6d28d9;
+  background: var(--primary-color);
 }
 
 .booking-progress-item small {
@@ -701,7 +894,7 @@ a {
 .calendar-header h3 {
   margin-top: 0.35rem;
   font-family: var(--font-manrope), sans-serif;
-  font-size: 1.45rem;
+  font-size: var(--h3-size);
   font-weight: 650;
 }
 
@@ -710,15 +903,15 @@ a {
   width: 39px;
   height: 39px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--page-border-color), transparent 20%);
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.68);
-  background: rgba(255, 255, 255, 0.025);
+  color: color-mix(in srgb, var(--page-text-color), transparent 32%);
+  background: color-mix(in srgb, var(--page-card-color), transparent 35%);
   transition: 160ms ease;
 }
 
 .calendar-arrow:hover:not(:disabled) {
-  border-color: rgba(168, 85, 247, 0.6);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 40%);
   color: white;
 }
 
@@ -735,7 +928,7 @@ a {
 
 .calendar-weekday {
   padding: 0.55rem 0;
-  color: rgba(255, 255, 255, 0.35);
+  color: color-mix(in srgb, var(--page-text-color), transparent 65%);
   font-size: 0.62rem;
   text-align: center;
   text-transform: uppercase;
@@ -746,28 +939,32 @@ a {
   min-height: 37px;
   border: 1px solid transparent;
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.77);
-  background: rgba(255, 255, 255, 0.018);
-  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 23%);
+  background: color-mix(in srgb, var(--page-card-color), transparent 45%);
+  font-size: var(--p-size);
   transition: 160ms ease;
 }
 
 .calendar-day:hover:not(:disabled) {
-  border-color: rgba(168, 85, 247, 0.5);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 50%);
   color: white;
-  background: rgba(124, 58, 237, 0.12);
+  background: color-mix(in srgb, var(--primary-color), transparent 88%);
 }
 
 .calendar-day.selected {
-  border-color: #a855f7;
+  border-color: var(--secondary-color);
   color: white;
-  background: linear-gradient(135deg, #5b21b6, #8b5cf6);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary-color), black 24%),
+    var(--primary-color)
+  );
+  box-shadow: 0 0 20px color-mix(in srgb, var(--primary-color), transparent 70%);
 }
 
 .calendar-day:disabled {
   cursor: not-allowed;
-  color: rgba(255, 255, 255, 0.17);
+  color: color-mix(in srgb, var(--page-text-color), transparent 83%);
   background: transparent;
 }
 
@@ -779,8 +976,8 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 55%);
+  font-size: var(--p-size);
   transition: color 160ms ease;
 }
 
@@ -794,29 +991,29 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.11);
+  border: 1px solid color-mix(in srgb, var(--page-border-color), transparent 10%);
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.68);
-  background: rgba(255, 255, 255, 0.02);
-  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 32%);
+  background: color-mix(in srgb, var(--page-card-color), transparent 40%);
+  font-size: var(--button-text-size);
   transition: 180ms ease;
 }
 
 .time-slot:hover,
 .time-slot.selected {
-  border-color: rgba(168, 85, 247, 0.65);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 35%);
   color: white;
-  background: rgba(109, 40, 217, 0.18);
+  background: color-mix(in srgb, var(--primary-color), transparent 82%);
 }
 
 .booking-summary {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  border: 1px solid rgba(139, 92, 246, 0.22);
+  border: 1px solid color-mix(in srgb, var(--primary-color), transparent 78%);
   border-radius: 999px;
   padding: 0.55rem 0.75rem;
-  background: rgba(109, 40, 217, 0.09);
+  background: color-mix(in srgb, var(--primary-color), transparent 91%);
 }
 
 .form-field {
@@ -825,21 +1022,21 @@ a {
 }
 
 .form-field > span {
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--page-text-color), transparent 48%);
+  font-size: var(--p-size);
 }
 
 .form-field input,
 .form-field select,
 .form-field textarea {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--page-border-color), transparent 20%);
   border-radius: 10px;
   outline: none;
-  color: white;
-  background: rgba(255, 255, 255, 0.025);
+  color: var(--page-text-color);
+  background: color-mix(in srgb, var(--page-card-color), transparent 35%);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--p-size);
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
@@ -860,18 +1057,18 @@ a {
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-  border-color: rgba(168, 85, 247, 0.68);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  border-color: color-mix(in srgb, var(--secondary-color), transparent 32%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color), transparent 90%);
 }
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.24);
+  color: color-mix(in srgb, var(--page-text-color), transparent 76%);
 }
 
 .form-field select option {
   color: white;
-  background: #0b0913;
+  background: var(--page-card-color);
 }
 
 .contact-card {
@@ -891,14 +1088,14 @@ a {
 
 .contact-card strong {
   margin-bottom: 0.55rem;
-  font-size: 0.9rem;
+  font-size: var(--h4-size);
 }
 
 .contact-card small {
   margin-top: 0.28rem;
-  color: rgba(255, 255, 255, 0.44);
-  font-size: 0.75rem;
-  line-height: 1.4;
+  color: color-mix(in srgb, var(--page-text-color), transparent 56%);
+  font-size: var(--p-size);
+  line-height: var(--theme-line-height);
 }
 
 @media (min-width: 640px) {
@@ -915,7 +1112,7 @@ a {
 
   .stat-item {
     min-height: 115px;
-    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    border-right: 1px solid color-mix(in srgb, var(--page-border-color), transparent 30%);
     border-bottom: 0;
   }
 
@@ -925,7 +1122,7 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .site-main {
+  .site-content {
     margin-left: 238px;
   }
 
@@ -983,11 +1180,11 @@ a {
   }
 
   .hero-title {
-    font-size: clamp(3rem, 15vw, 4.1rem);
+    font-size: clamp(2.6rem, 15vw, var(--h1-size));
   }
 
   .section-title {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    font-size: clamp(2.2rem, 12vw, var(--h2-size));
   }
 
   .stats-strip {
@@ -1032,12 +1229,95 @@ a {
 }
 
 /* Footer Styles */
-footer {
+.site-footer {
   margin-top: auto;
+  border-color: var(--page-border-color);
+  color: var(--page-text-color);
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--primary-color), transparent 95%),
+      transparent
+    ),
+    var(--page-footer-color);
+  font-size: var(--footer-text-size);
 }
 
-footer a {
+.site-footer a {
   text-decoration: none;
+}
+
+.site-footer h4 {
+  color: var(--page-text-color);
+  font-size: var(--h4-size);
+}
+
+.site-footer p,
+.site-footer li,
+.site-footer span,
+.site-footer a {
+  line-height: var(--theme-line-height);
+}
+
+html[data-theme="light"] .text-white,
+html[data-theme="light"] .text-white\/78,
+html[data-theme="light"] .text-white\/77 {
+  color: var(--page-text-color);
+}
+
+html[data-theme="light"] .text-white\/70,
+html[data-theme="light"] .text-white\/68,
+html[data-theme="light"] .text-white\/60,
+html[data-theme="light"] .text-white\/58,
+html[data-theme="light"] .text-white\/56,
+html[data-theme="light"] .text-white\/55,
+html[data-theme="light"] .text-white\/52,
+html[data-theme="light"] .text-white\/50,
+html[data-theme="light"] .text-white\/48,
+html[data-theme="light"] .text-white\/45,
+html[data-theme="light"] .text-white\/44,
+html[data-theme="light"] .text-white\/43,
+html[data-theme="light"] .text-white\/42,
+html[data-theme="light"] .text-white\/40,
+html[data-theme="light"] .text-white\/38,
+html[data-theme="light"] .text-white\/35,
+html[data-theme="light"] .text-white\/34,
+html[data-theme="light"] .text-white\/32,
+html[data-theme="light"] .text-white\/30 {
+  color: color-mix(in srgb, var(--page-text-color), transparent 42%);
+}
+
+html[data-theme="light"] .text-white\/28,
+html[data-theme="light"] .text-white\/24,
+html[data-theme="light"] .text-white\/20,
+html[data-theme="light"] .text-white\/15 {
+  color: color-mix(in srgb, var(--page-text-color), transparent 68%);
+}
+
+html[data-theme="light"] .border-white\/28,
+html[data-theme="light"] .border-white\/15,
+html[data-theme="light"] .border-white\/13,
+html[data-theme="light"] .border-white\/12,
+html[data-theme="light"] .border-white\/11,
+html[data-theme="light"] .border-white\/10,
+html[data-theme="light"] .border-white\/9,
+html[data-theme="light"] .border-white\/8 {
+  border-color: var(--page-border-color);
+}
+
+html[data-theme="light"] .bg-white\/15,
+html[data-theme="light"] .bg-white\/10,
+html[data-theme="light"] .bg-white\/8,
+html[data-theme="light"] .bg-white\/6,
+html[data-theme="light"] .bg-white\/5 {
+  background-color: color-mix(in srgb, var(--page-text-color), transparent 94%);
+}
+
+html[data-theme="light"] .from-\[\#08070d\]\/65 {
+  --tw-gradient-from: color-mix(in srgb, var(--page-text-color), transparent 58%) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--page-text-color), transparent 100%) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
 footer h4 {

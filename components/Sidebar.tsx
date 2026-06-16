@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
@@ -47,7 +48,7 @@ export function Sidebar() {
   }, []);
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 hidden w-[238px] border-r border-white/10 bg-[#05050a]/92 backdrop-blur-xl lg:flex lg:flex-col">
+    <aside className="site-sidebar fixed inset-y-0 left-0 z-50 hidden w-[238px] border-r backdrop-blur-xl lg:flex lg:flex-col">
       <div className="px-7 pb-9 pt-8">
         <Logo />
       </div>
@@ -59,15 +60,13 @@ export function Sidebar() {
             <a
               key={id}
               href={`#${id}`}
-              className={`group relative flex items-center gap-4 px-7 py-4 text-sm transition ${
-                isActive
-                  ? "bg-gradient-to-r from-violet-600/35 to-transparent text-white"
-                  : "text-white/58 hover:text-white"
+              className={`site-sidebar-link group relative flex items-center gap-4 px-7 py-4 transition ${
+                isActive ? "active" : ""
               }`}
               aria-current={isActive ? "page" : undefined}
             >
               {isActive && (
-                <span className="absolute inset-y-0 left-0 w-0.5 bg-violet-400 shadow-[0_0_18px_#9f5cff]" />
+                <span className="site-sidebar-active-bar absolute inset-y-0 left-0 w-0.5" />
               )}
               <Icon
                 size={19}
@@ -81,6 +80,7 @@ export function Sidebar() {
       </nav>
 
       <div className="px-7 pb-7">
+        <ThemeModeToggle />
         <a href="#contact" className="outline-button w-full justify-center">
           Let&apos;s talk
           <span aria-hidden>↗</span>

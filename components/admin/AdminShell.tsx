@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  Palette,
   Quote,
   X,
 } from "lucide-react";
@@ -23,6 +24,7 @@ const navItems = [
   { href: "/admin/bookings", label: "Bookings", icon: CalendarDays },
   { href: "/admin/projects", label: "Projects", icon: BriefcaseBusiness },
   { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
+  { href: "/admin/settings", label: "Settings", icon: Palette },
 ];
 
 export function AdminShell({

@@ -18,18 +18,20 @@ export default async function Home() {
   ]);
 
   return (
-    <>
+    <div className="site-layout">
       <Sidebar />
       <MobileNav />
-      <main className="site-main">
-        <Hero />
-        <Services />
-        <Projects projects={projects} />
-        <Process />
-        <Testimonials testimonials={testimonials} />
-        <BookingSection />
-      </main>
-      <Footer />
-    </>
+      <div className="site-content">
+        <main className="site-main">
+          <Hero />
+          <Services />
+          <Projects projects={projects} />
+          <Process />
+          <Testimonials testimonials={testimonials} />
+          <BookingSection />
+        </main>
+        <Footer />
+      </div>
+    </div>
   );
 }
