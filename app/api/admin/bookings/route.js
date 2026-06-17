@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { apiError, requireAdminRequest } from "@/lib/admin-api";
 import { adminBookingSchema } from "@/lib/booking-schema";
 import { connectToDatabase } from "@/lib/db";
-import { sendMeetingScheduledEmails } from "@/lib/email";
+import { getEmailErrorMessage, sendMeetingScheduledEmails } from "@/lib/email";
 import { createLocalBooking, hasLocalBookingConflict, listLocalBookings, } from "@/lib/local-booking-store";
 import Booking from "@/models/Booking";
+export const runtime = "nodejs";
 export async function GET(request) {
     const auth = requireAdminRequest(request);
     if (auth.response)
@@ -45,11 +46,13 @@ export async function POST(request) {
             }
             const created = await Booking.create({ ...meeting, source: "admin" });
             let emailSent = true;
+            let emailError = "";
             try {
                 await sendMeetingScheduledEmails({ ...meeting, source: "admin" });
             }
             catch (error) {
                 emailSent = false;
+                emailError = getEmailErrorMessage(error);
                 console.error("Meeting schedule email error:", error);
             }
             return NextResponse.json({
@@ -57,7 +60,7 @@ export async function POST(request) {
                 emailSent,
                 message: emailSent
                     ? "Meeting scheduled and both emails were sent."
-                    : "Meeting scheduled, but email delivery failed.",
+                    : `Meeting scheduled, but email delivery failed. ${emailError}`,
                 data: JSON.parse(JSON.stringify(created)),
             }, { status: 201 });
         }
@@ -74,11 +77,13 @@ export async function POST(request) {
             }
             const created = createLocalBooking({ ...meeting, source: "admin" });
             let emailSent = true;
+            let emailError = "";
             try {
                 await sendMeetingScheduledEmails({ ...meeting, source: "admin" });
             }
             catch (error) {
                 emailSent = false;
+                emailError = getEmailErrorMessage(error);
                 console.error("Meeting schedule email error:", error);
             }
             return NextResponse.json({
@@ -86,7 +91,7 @@ export async function POST(request) {
                 emailSent,
                 message: emailSent
                     ? "Meeting scheduled and both emails were sent."
-                    : "Meeting scheduled, but email delivery failed.",
+                    : `Meeting scheduled, but email delivery failed. ${emailError}`,
                 data: created,
             }, { status: 201 });
         }

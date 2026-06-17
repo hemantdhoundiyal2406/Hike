@@ -5,6 +5,7 @@ import { connectToDatabase } from "@/lib/db";
 import { sendBookingCreatedEmails } from "@/lib/email";
 import { createLocalBooking, hasLocalBookingConflict, } from "@/lib/local-booking-store";
 import Booking from "@/models/Booking";
+export const runtime = "nodejs";
 export async function POST(request) {
     try {
         const body = await request.json();

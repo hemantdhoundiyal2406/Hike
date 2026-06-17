@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { apiError, isValidDocumentId, requireAdminRequest, } from "@/lib/admin-api";
 import { adminBookingSchema } from "@/lib/booking-schema";
 import { connectToDatabase } from "@/lib/db";
-import { sendBookingUpdatedEmails } from "@/lib/email";
+import { getEmailErrorMessage, sendBookingUpdatedEmails } from "@/lib/email";
 import { deleteLocalBooking, hasLocalBookingConflict, updateLocalBooking, } from "@/lib/local-booking-store";
 import Booking from "@/models/Booking";
+export const runtime = "nodejs";
 export async function PATCH(request, context) {
     const auth = requireAdminRequest(request);
     if (auth.response)
@@ -36,11 +37,13 @@ export async function PATCH(request, context) {
                 return NextResponse.json({ success: false, message: "Booking not found." }, { status: 404 });
             }
             let emailSent = true;
+            let emailError = "";
             try {
                 await sendBookingUpdatedEmails(booking);
             }
             catch (error) {
                 emailSent = false;
+                emailError = getEmailErrorMessage(error);
                 console.error("Booking update email error:", error);
             }
             return NextResponse.json({
@@ -48,7 +51,7 @@ export async function PATCH(request, context) {
                 emailSent,
                 message: emailSent
                     ? "Booking updated and both emails were sent."
-                    : "Booking updated, but email delivery failed.",
+                    : `Booking updated, but email delivery failed. ${emailError}`,
                 data: JSON.parse(JSON.stringify(updated)),
             });
         }
@@ -72,11 +75,13 @@ export async function PATCH(request, context) {
                 return NextResponse.json({ success: false, message: "Booking not found." }, { status: 404 });
             }
             let emailSent = true;
+            let emailError = "";
             try {
                 await sendBookingUpdatedEmails(booking);
             }
             catch (error) {
                 emailSent = false;
+                emailError = getEmailErrorMessage(error);
                 console.error("Booking update email error:", error);
             }
             return NextResponse.json({
@@ -84,7 +89,7 @@ export async function PATCH(request, context) {
                 emailSent,
                 message: emailSent
                     ? "Booking updated and both emails were sent."
-                    : "Booking updated, but email delivery failed.",
+                    : `Booking updated, but email delivery failed. ${emailError}`,
                 data: updated,
             });
         }
